@@ -27,3 +27,20 @@ for item in soup.select('.wt-grid__item-xs-6'):
         
         
 ```
+
+Next apge:
+
+```python
+    # Check if there are more results on the "next" page
+    try:
+        nextPage = (soup.find("a",{"class":"wt-btn wt-btn--small wt-action-group__item wt-btn--icon"}).attrs['href'])
+    except:
+        nextPage = None
+    
+    # If there is another page of results, grab it and combine
+    if nextPage:
+        return pd.concat([newData, collectProductData(nextPage)], axis=0).reset_index(drop=True)
+    # Otherwise return the current data
+    else:
+        return newData
+```
